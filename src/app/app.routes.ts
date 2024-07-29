@@ -6,4 +6,5 @@ export const routes: Routes = [
   { path: 'add-workout', component: HealthTrackerWorkoutFormComponent },
   { path: 'workout-list', component: WorkoutListComponent },
   { path: '', redirectTo: '/add-workout', pathMatch: 'full' },
+  { path: '**', redirectTo: '/workouts' },
 ];
