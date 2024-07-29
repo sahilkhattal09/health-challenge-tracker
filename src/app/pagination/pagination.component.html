@@ -1,0 +1,17 @@
+<div class="mt-4 flex justify-between">
+  <button
+    (click)="previousPage()"
+    [disabled]="currentPage === 1"
+    class="px-4 py-2 bg-gray-300 text-white rounded"
+  >
+    Previous
+  </button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button
+    (click)="nextPage()"
+    [disabled]="currentPage === totalPages"
+    class="px-4 py-2 bg-gray-300 text-white rounded"
+  >
+    Next
+  </button>
+</div>

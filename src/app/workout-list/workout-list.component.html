@@ -1,0 +1,90 @@
+<div class="container mx-auto mt-8">
+  <div class="flex justify-between mb-4">
+    <div class="flex-1 ml-4 max-w-sm mr-4">
+      <label for="search" class="block mb-2 text-gray-700"
+        >Search by name</label
+      >
+      <input
+        id="search"
+        type="text"
+        placeholder="Search by name"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="onSearch()"
+        class="w-full p-2 border border-gray-300 rounded bg-gray-100"
+      />
+    </div>
+    <div class="flex-1 max-w-sm ml-4">
+      <label for="filter" class="block mb-2 text-gray-700"
+        >Filter by workout type</label
+      >
+      <select
+        id="filter"
+        [(ngModel)]="filterQuery"
+        (change)="applyFilters()"
+        class="w-full p-2 border border-gray-300 rounded bg-gray-100"
+      >
+        <option value="">All</option>
+        <option value="cycling">Cycling</option>
+        <option value="swimming">Swimming</option>
+        <option value="running">Running</option>
+        <option value="yoga">Yoga</option>
+      </select>
+    </div>
+  </div>
+
+  <table class="min-w-full bg-white">
+    <thead class="bg-gray-800 text-white">
+      <tr>
+        <th class="w-1/4 px-4 py-2">Name</th>
+        <th class="w-1/4 px-4 py-2">Workout Type</th>
+        <th class="w-1/4 px-4 py-2">Number of Workouts</th>
+        <th class="w-1/4 px-4 py-2">Total Workout Minutes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let workout of paginatedWorkouts" class="text-center">
+        <td
+          class="border px-4 py-2 cursor-pointer"
+          (click)="showWorkoutGraph(workout.name)"
+        >
+          {{ workout.name }}
+        </td>
+        <td class="border px-4 py-2">{{ workout.workouts }}</td>
+        <td class="border px-4 py-2">{{ workout.numberOfWorkouts }}</td>
+        <td class="border px-4 py-2">{{ workout.totalWorkoutMinutes }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="flex justify-center items-center mt-6 space-x-4">
+    <button
+      class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm"
+      (click)="onPageChange(currentPage - 1)"
+      [disabled]="currentPage === 1"
+      [class.bg-gray-300]="currentPage === 1"
+      [class.cursor-not-allowed]="currentPage === 1"
+    >
+      Previous
+    </button>
+    <span class="text-lg">Page {{ currentPage }} of {{ totalPages }}</span>
+    <button
+      class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm"
+      (click)="onPageChange(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+      [class.bg-gray-300]="currentPage === totalPages"
+      [class.cursor-not-allowed]="currentPage === totalPages"
+    >
+      Next
+    </button>
+  </div>
+  <div *ngIf="selectedWorkout" class="mt-8">
+    <div class="max-w-md mx-auto">
+      <canvas
+        baseChart
+        [data]="chartData"
+        [options]="chartOptions"
+        [type]="'bar'"
+      ></canvas>
+    </div>
+  </div>
+</div>
