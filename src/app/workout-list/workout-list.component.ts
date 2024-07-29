@@ -95,14 +95,12 @@ export class WorkoutListComponent implements OnInit {
     this.currentPage = 1;
     this.updatePagination();
   }
+
   updatePagination() {
-    console.log('Updating pagination...');
     const totalItems = this.filteredWorkouts.length;
-    console.log(`Total items: ${totalItems}`);
-
     this.totalPages = Math.ceil(totalItems / this.itemsPerPage);
-    console.log(`Total pages: ${this.totalPages}`);
 
+    // Ensure the current page is within valid bounds
     if (this.currentPage > this.totalPages) {
       this.currentPage = this.totalPages;
     }
@@ -110,12 +108,10 @@ export class WorkoutListComponent implements OnInit {
       this.currentPage = 1;
     }
 
+    // Slice the filteredWorkouts array to get only the items for the current page
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    console.log(`Showing items from index ${startIndex} to ${endIndex}`);
-
     this.paginatedWorkouts = this.filteredWorkouts.slice(startIndex, endIndex);
-    console.log('Paginated workouts:', this.paginatedWorkouts);
   }
 
   onPageChange(page: number) {
